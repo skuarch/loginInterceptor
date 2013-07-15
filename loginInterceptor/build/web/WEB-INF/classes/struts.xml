@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>    
+    
+    <constant name="struts.devMode" value="true" />    
+    <constant name="struts.i18n.reload" value="true" />
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <constant name="struts.serve.static.browserCache" value="false" />
+    <constant name="struts.configuration.xml.reload" value="true" />
+    <constant name="struts.ognl.enableExpressionCache" value="false" />      
+  
+    <package name="default" extends="struts-default">
+        
+        <interceptors>   
+                     
+            <interceptor name="LoginInterceptor" class="interceptors.LoginInterceptor"/>
+            
+            <interceptor-stack name="defaultLogintStack">
+                <interceptor-ref name="LoginInterceptor">
+                    <param name="publicActions">
+                        Authentication
+                    </param>
+                </interceptor-ref>
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="timer" />
+                <interceptor-ref name="logger" />
+            </interceptor-stack>
+            
+        </interceptors>        
+        
+        <default-interceptor-ref name="defaultLogintStack" />
+        
+        <global-results>
+            <result name="loginForm">/loginForm.jsp</result>            
+        </global-results>
+        
+        <action name="Authentication" class="actions.Authentication">            
+            <result name="success">start.jsp</result>            
+            <result name="loginForm">/loginForm.jsp</result>            
+            <result name="error">error.jsp</result>
+        </action>
+        
+        <action name="start">
+            <result name="success">start.jsp</result>
+            <result name="error">error.jsp</result>
+        </action>
+        
+        <action name="loginForm">
+            <result name="input">/loginForm.jsp</result>
+            <result name="success">/loginForm.jsp</result>
+            <result name="error">error.jsp</result>
+        </action>
+        
+        <action name="welcome">
+            <result name="input">/welcome.jsp</result>
+            <result name="success">/welcome.jsp</result>
+            <result name="error">error.jsp</result>
+        </action>
+        
+        
+    </package>       
+    
+</struts>
